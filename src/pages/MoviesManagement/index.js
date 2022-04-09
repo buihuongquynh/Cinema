@@ -163,7 +163,7 @@ export default function MoviesManagement() {
     newImageUpdate.current = fakeImage;
     if (typeof hinhAnh === "string") {
       const movieUpdate = movieListDisplay.find(
-        (movie) => movie.maPhim === fakeImage.maPhim
+        (movie) => movie.maPhim === fakeImage.maPhim);
       movieObj.hinhAnh = movieUpdate.hinhAnh;
       dispatch(updateMovie(movieObj));
       return undefined;
