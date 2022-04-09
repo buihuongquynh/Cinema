@@ -30,30 +30,26 @@ export default function ListSeat() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // khởi tạo event lắng nghe "resize"
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   useEffect(() => {
     handleResize();
-  }, [listSeat]); // sau khi có listSeat thì run handleResize để lấy giá trị đầu tiên
+  }, [listSeat]); 
   const handleResize = () => {
     setWidthSeat(domToSeatElement?.current?.offsetWidth);
   };
 
   const handleSelectedSeat = (seatSelected) => {
     if (seatSelected.daDat) {
-      // click vào ghế đã có người chọn
       return;
     }
-    // đổi lại giá trị selected của ghế đã chọn
     let newListSeat = listSeat.map((seat) => {
       if (seatSelected.maGhe === seat.maGhe) {
         return { ...seat, selected: !seat.selected };
       }
       return seat;
     });
-    // cập nhật lại danh sách hiển thị ghế đã chọn
     const newListSeatSelected = newListSeat?.reduce(
       (newListSeatSelected, seat) => {
         if (seat.selected) {
@@ -63,23 +59,19 @@ export default function ListSeat() {
       },
       []
     );
-    // thông báo nếu chọn quá 10 ghế
     if (newListSeatSelected.length === 11) {
       dispatch({
         type: SET_ALERT_OVER10,
       });
       return;
     }
-    // cập nhật lại danhSachVe dùng để BookTicket
     const danhSachVe = newListSeat?.reduce((danhSachVe, seat) => {
       if (seat.selected) {
         return [...danhSachVe, { maGhe: seat.maGhe, giaVe: seat.giaVe }];
       }
       return danhSachVe;
     }, []);
-    // cập nhật biến kiểm tra đã có ghế nào được chọn chưa
     const isSelectedSeat = newListSeatSelected.length > 0 ? true : false;
-    // tính lại tổng tiền
     const amount = newListSeat?.reduce((amount, seat) => {
       if (seat.selected) {
         return (amount += seat.giaVe);
@@ -116,7 +108,6 @@ export default function ListSeat() {
 
   return (
     <main className={classes.listSeat}>
-      {/* thông tin phim */}
       <div className={classes.info_CountDown}>
         <div className={classes.infoTheater}>
           <img
@@ -139,20 +130,16 @@ export default function ListSeat() {
 
       <div className={classes.overflowSeat}>
         <div className={classes.invariantWidth}>
-         
-          {/* danh sách ghế */}
-          <div className={classes.seatSelect}>
+                   <div className={classes.seatSelect}>
             {listSeat?.map((seat, i) => (
               <div
                 className={classes.seat}
                 key={seat.maGhe}
                 ref={domToSeatElement}
               >
-                {/* label A B C ... đầu mỗi row */}
                 {(i === 0 || i % 16 === 0) && (
                   <p className={classes.label}>{seat.label.slice(0, 1)}</p>
                 )}
-                {/* số ghế thứ tự của ghế */}
                 {seat.selected && (
                   <p className={classes.seatName}>
                     {Number(seat.label.slice(1)) < 10
@@ -160,7 +147,6 @@ export default function ListSeat() {
                       : seat.label.slice(1)}
                   </p>
                 )}
-                {/* label ghế đã có người đặt */}
                 {seat.daDat && (
                   <img
                     className={classes.seatLocked}
@@ -168,13 +154,11 @@ export default function ListSeat() {
                     alt="notchoose"
                   />
                 )}
-                {/* icon ghế */}
                 <SeatIcon
                   style={{ color: color(seat) }}
                   className={classes.seatIcon}
                 />
-                {/* đường viền chỉ vùng ghế */}
-                {/* vùng bắt sự kiện click */}
+            
                 <div
                   className={classes.areaClick}
                   onClick={() => handleSelectedSeat(seat)}
@@ -184,7 +168,6 @@ export default function ListSeat() {
           </div>
         </div>
       </div>
-      {/* thông tin các loại ghế */}
       <div className={classes.noteSeat}>
         <div className={classes.typeSeats}>
           <div>

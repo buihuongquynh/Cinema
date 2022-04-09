@@ -10,24 +10,24 @@ export default function CheckIsUserBookTicket(taiKhoan) {
   const [isUserBookTicket, setisUserBookTicket] = useState(true)
   const url = "https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan"
   useEffect(() => {
-    let cancel = Axios.CancelToken.source(); // Axios cung cấp, để cancel gọi api khi component bị hủy(bấm chuyển cụm rạp khác)
+    let cancel = Axios.CancelToken.source(); 
     const loadData = async () => {
-      try { // bắt lỗi khi get API, nếu có lỗi thì vào catch
+      try { 
         const response = await Axios.post(url, { taiKhoan }, { cancelToken: cancel.token })
         const isUserBookTicket = response.data.thongTinDatVe.length > 0 ? true : false
         setisUserBookTicket(isUserBookTicket);
-      } catch (error) { // vào đây khi có lỗi get api hoặc khi cancel thành công
-        if (Axios.isCancel(error)) { // cancel request thành công
+      } catch (error) { 
+        if (Axios.isCancel(error)) { 
           console.log("AxiosCancel: caught cancel");
         } else {
-          throw error; // báo lỗi get api
+          throw error;
         }
       }
     };
     loadData();
     setTimeout(() => cancel.cancel(), 5000)
     return () => {
-      cancel.cancel(); // unmounting thì cancel request axios
+      cancel.cancel(); 
     };
   }, [])
 

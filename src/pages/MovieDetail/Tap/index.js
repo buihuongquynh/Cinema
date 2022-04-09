@@ -81,25 +81,22 @@ export default function CenteredTabs({
   });
   const classes = useStyles({ isMobile });
 
-  // phục vụ kh nhấp btn mua vé
   useEffect(() => {
-    window.scrollTo(0, 0); // ngăn window.history.scrollRestoration = 'auto';
+    window.scrollTo(0, 0); 
     setValueTab(() => 0);
     setCroll(() => onClickBtnMuave);
-  }, [onClickBtnMuave]); // khi click muave thì mới mở tap 0 > đổi giá trị croll để scroll tới TapMovieDetail
+  }, [onClickBtnMuave]); 
 
   useEffect(() => {
     if (onClickBtnMuave !== 0) {
-      // không scroll khi mới load topDesktopMovieDetail
       scroll("TapMovieDetail");
     }
-  }, [croll]); // khi nhấn muave và đã hoàn thành mở tap 0 thì scroll
+  }, [croll]); 
   const handleChange = (event, newValue) => {
     setValueTab(newValue);
   };
   const handletyping = (event) => {
     if (event.target.value.length >= 61) {
-      // nếu comment quá ngắn
       setwarningtext(false);
     }
     setdataComment((data) => ({ ...data, post: event.target.value }));

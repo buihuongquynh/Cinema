@@ -4,27 +4,26 @@ export default function UseThoiLuongDanhGia(maPhim) {
   const [data, setData] = useState({ thoiLuong: '120', danhGia: '10' })
   const url = `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`
   useEffect(() => {
-    let getInfoFlimCancel = Axios.CancelToken.source(); // Axios cung cấp, để cancel gọi api khi component bị hủy(bấm chuyển cụm rạp khác)
+    let getInfoFlimCancel = Axios.CancelToken.source(); 
     const loadData = async () => {
-      try { // bắt lỗi khi get API, nếu có lỗi thì vào catch
+      try {
         const response = await Axios.get(url, {
           cancelToken: getInfoFlimCancel.token
         });
         setData({
-          thoiLuong: response.data?.heThongRapChieu?.[0]?.cumRapChieu?.[0]?.lichChieuPhim?.[0]?.thoiLuong, // tách ra thời lượng phim
+          thoiLuong: response.data?.heThongRapChieu?.[0]?.cumRapChieu?.[0]?.lichChieuPhim?.[0]?.thoiLuong, 
           danhGia: response.data.danhGia
         });
-      } catch (error) { // vào đây khi có lỗi get api hoặc khi cancel thành công
-        if (Axios.isCancel(error)) { // cancel request thành công
-          // console.log("AxiosCancel: caught cancel");
+      } catch (error) { 
+        if (Axios.isCancel(error)) { 
         } else {
-          throw error; // báo lỗi get api
+          throw error; 
         }
       }
     };
     loadData();
     return () => {
-      getInfoFlimCancel.cancel(); // unmounting thì cancel request axios
+      getInfoFlimCancel.cancel(); 
     };
   }, [])
   return { thoiLuong: data.thoiLuong, danhGia: data.danhGia }

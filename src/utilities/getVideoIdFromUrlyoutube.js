@@ -1,9 +1,5 @@
-// input: https://www.youtube.com/watch?v=IRG4qg8UXus
-//        https://www.youtube.com/embed/IRG4qg8UXus
-// output : IRG4qg8UXus
 
 import PropTypes from 'prop-types'
-
 const getVideoId = (urlYoutube) => {
   let videoId
   const indexLastSlash = urlYoutube?.lastIndexOf("/")

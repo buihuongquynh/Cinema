@@ -138,7 +138,6 @@ const useStyles = makeStyles((theme) => {
     paddingBtn: {
       padding: "18.4px 11px 18.4px",
     },
-    // popup menu
     menu: { maxHeight: 300, ...customScrollbar },
     menu__item: {
       width: "100%",
@@ -154,7 +153,6 @@ const useStyles = makeStyles((theme) => {
         fontSize: 11,
         color: "#aaa",
       },
-      // màu nền và chữ khi hover
       "&:hover": {
         backgroundColor: "rgb(238, 130, 59)",
         color: "#fff",
@@ -267,7 +265,6 @@ const materialTheme = createMuiTheme({
       },
     },
     MuiSvgIcon: {
-      // màu biểu tượng lịch
       root: {
         color: "#fff",
       },

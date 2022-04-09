@@ -63,7 +63,7 @@ export default function Modal() {
       maxWidth="md"
     >
       {timeOut &&
-        !isBookTicket && ( // không thông báo hết giờ khi đã có kết quả đặt vé
+        !isBookTicket && (
           <div className={classes.padding}>
             <p>
               Đã hết thời gian giữ ghế. Vui lòng thực hiện đơn hàng trong thời
@@ -75,7 +75,7 @@ export default function Modal() {
           </div>
         )}
       {alertOver10 &&
-        !timeOut && ( // ẩn thông báo quá 10 ghế khi time out
+        !timeOut && (
           <div className={classes.over10}>
             <div className={classes.notification}>
               <img
@@ -95,7 +95,7 @@ export default function Modal() {
           </div>
         )}
       {!isMobile &&
-        isBookTicket && ( // chỉ open modal khi là desktop và đã đạt vé
+        isBookTicket && ( 
           <>
             <ResultBookTicket />
             <div className={classes.spaceEvenly}>

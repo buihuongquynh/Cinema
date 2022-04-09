@@ -7,26 +7,26 @@ export default function UseThoiLuongDanhGia(maLichChieu) {
     if (!maLichChieu) {
       return
     }
-    let getInfoFlimCancel = Axios.CancelToken.source(); // Axios cung cấp, để cancel gọi api khi component bị hủy(bấm chuyển cụm rạp khác)
+    let getInfoFlimCancel = Axios.CancelToken.source(); 
     const loadData = async () => {
-      try { // bắt lỗi khi get API, nếu có lỗi thì vào catch
+      try {
         const response = await Axios.get(url, {
           cancelToken: getInfoFlimCancel.token
         });
         setData({
-          diaChi: response.data?.thongTinPhim?.diaChi, // tách ra địa chỉ
+          diaChi: response.data?.thongTinPhim?.diaChi,
         });
-      } catch (error) { // vào đây khi có lỗi get api hoặc khi cancel thành công
-        if (Axios.isCancel(error)) { // cancel request thành công
-          // console.log("AxiosCancel: caught cancel");
+      } catch (error) { 
+        if (Axios.isCancel(error)) { 
+         
         } else {
-          throw error; // báo lỗi get api
+          throw error; 
         }
       }
     };
     loadData();
     return () => {
-      getInfoFlimCancel.cancel(); // unmounting thì cancel request axios
+      getInfoFlimCancel.cancel(); 
     };
   }, [])
   return { diaChi: data.diaChi }

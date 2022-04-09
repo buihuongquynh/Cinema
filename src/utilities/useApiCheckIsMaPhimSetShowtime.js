@@ -10,24 +10,24 @@ export default function CheckIsMaPhimSetShowtime(maPhim) {
   const [isMaPhimSetShowtime, setIsMaPhimSetShowtime] = useState(true)
   const url = `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim?MaPhim=${maPhim}`
   useEffect(() => {
-    let cancel = Axios.CancelToken.source(); // Axios cung cấp, để cancel gọi api khi component bị hủy(bấm chuyển cụm rạp khác)
+    let cancel = Axios.CancelToken.source(); 
     const loadData = async () => {
-      try { // bắt lỗi khi get API, nếu có lỗi thì vào catch
+      try { 
         const response = await Axios.get(url, { cancelToken: cancel.token })
         const isMaPhimSetShowtime = response.data.lichChieu.length > 0 ? true : false
         setIsMaPhimSetShowtime(isMaPhimSetShowtime);
-      } catch (error) { // vào đây khi có lỗi get api hoặc khi cancel thành công
-        if (Axios.isCancel(error)) { // cancel request thành công
+      } catch (error) { 
+        if (Axios.isCancel(error)) { 
           console.log("AxiosCancel: caught cancel");
         } else {
-          throw error; // báo lỗi get api
+          throw error; 
         }
       }
     };
     loadData();
     setTimeout(() => cancel.cancel(), 5000)
     return () => {
-      cancel.cancel(); // unmounting thì cancel request axios
+      cancel.cancel(); 
     };
   }, [])
 

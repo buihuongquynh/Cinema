@@ -35,7 +35,6 @@ const initialState = {
   isReadyPayment: false,
   activeStep: 0,
 
-  // BookTicket ticked
   loadingBookTicketTicket: false,
   successBookTicketTicketMessage: null,
   errorBookTicketMessage: null,

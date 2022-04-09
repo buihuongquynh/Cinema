@@ -58,12 +58,9 @@ const TopBar = ({
             </IconButton>
           </Tooltip>
         </Hidden>
-
-        {/* cái icon menu */}
         <Hidden lgUp>
           <IconButton
             color="inherit"
-            // nếu click thì thực hiện func đóng mở Nav được truyền vào từ cha
             onClick={onMobileNavOpen}
           >
             <MenuIcon />
@@ -73,8 +70,6 @@ const TopBar = ({
     </AppBar>
   );
 };
-
-// báo lỗi nếu kiểu dữ liệu truyền vào props không đúng với yều cầu bên dưới
 TopBar.propTypes = {
   className: PropTypes.string,
   onMobileNavOpen: PropTypes.func

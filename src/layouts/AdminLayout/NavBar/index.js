@@ -77,24 +77,17 @@ export default function NavBar({ onMobileClose, openMobile }) {
   const handleUser = () => {
     history.push("/taikhoan")
   }
-
-
-  // đây là nội dung cột bên trái
   const content = (
-
-    // cái này là div để dàn thành cột
     <Box
       height="100%"
       display="flex"
       flexDirection="column"
     >
-      {/* đây là phần logo avatar user và tên user */}
       <Box
-        // căn giữa cột
         alignItems="center"
         display="flex"
         flexDirection="column"
-        p={2} // padding 2
+        p={2} 
       >
         <Tooltip title="Thông tin tài khoản">
           <Avatar
@@ -118,12 +111,9 @@ export default function NavBar({ onMobileClose, openMobile }) {
         </Typography>
       </Box>
       <Divider />
-
-      {/* đây là phần menu lựa chọn */}
       <Box p={2}>
         <List>
           {items.map((item) => (
-            // NavItem hiện thị ra icon và title
             <NavItem
               href={item.href}
               key={item.title}
@@ -138,27 +128,24 @@ export default function NavBar({ onMobileClose, openMobile }) {
 
   return (
     <>
-
-      {/* đây là giao diện mobile */}
       <Hidden lgUp>
         <Drawer
           anchor="left"
           classes={{ paper: classes.mobileDrawer }}
           onClose={onMobileClose}
-          open={openMobile} // đóng mở tùy thuộc vào bạn click
-          variant="temporary" // kiểu temporary có một lớp phủ mờ hiện ra cho đến khi bạn chọn xong thì Drawer mới đóng lại
+          open={openMobile} 
+          variant="temporary"
         >
           {content}
         </Drawer>
 
       </Hidden>
-      {/* đây là giao diện desktop */}
       <Hidden mdDown>
         <Drawer
           anchor="left"
           classes={{ paper: classes.desktopDrawer }}
-          open // luôn luôn hiện Drawer
-          variant="persistent" // kiểu persistent không có lớp phủ mờ khi hiện drawer
+          open
+          variant="persistent"
         >
           {content}
         </Drawer>
@@ -177,6 +164,4 @@ NavBar.defaultProps = {
   onMobileClose: () => { },
   openMobile: false
 };
-
-// export default NavBar;
 

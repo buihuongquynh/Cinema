@@ -258,7 +258,6 @@ export default function SearchStickets() {
           getOptionLabel={(option) => option.tenPhim}
           style={{ width: 300 }}
           renderInput={(params) => {
-            // <SearchIcon />
             return (
               <TextField
                 {...params}

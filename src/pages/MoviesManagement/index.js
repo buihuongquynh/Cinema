@@ -98,7 +98,6 @@ export default function MoviesManagement() {
   }, [movieList2]);
 
   useEffect(() => {
-    // delete movie xong thì thông báo
     if (errorDeleteMovie === "Xóa thành công nhưng backend return error") {
       successDeleteMovie = "Xóa thành công !";
     }
@@ -146,11 +145,8 @@ export default function MoviesManagement() {
       enqueueSnackbar(errorAddUploadMovie, { variant: "error" });
     }
   }, [successAddUploadMovie, errorAddUploadMovie]);
-
-  // xóa một phim
   const handleDeleteOne = (maPhim) => {
     if (!loadingDeleteMovie) {
-      // nếu click xóa liên tục một user
       dispatch(deleteMovie(maPhim));
     }
   };
@@ -166,10 +162,8 @@ export default function MoviesManagement() {
     setOpenModal(false);
     newImageUpdate.current = fakeImage;
     if (typeof hinhAnh === "string") {
-      // nếu dùng updateMovieUpload sẽ bị reset danhGia về 10
       const movieUpdate = movieListDisplay.find(
         (movie) => movie.maPhim === fakeImage.maPhim
-      ); // lẩy ra url gốc, tránh gửi base64 tới backend
       movieObj.hinhAnh = movieUpdate.hinhAnh;
       dispatch(updateMovie(movieObj));
       return undefined;
@@ -206,7 +200,6 @@ export default function MoviesManagement() {
   };
 
   const onFilter = () => {
-    // dùng useCallback, slugify bỏ dấu tiếng việt
     let searchMovieListDisplay = movieListDisplay.filter((movie) => {
       const matchTenPhim =
         slugify(movie.tenPhim ?? "", modifySlugify)?.indexOf(
@@ -329,7 +322,6 @@ export default function MoviesManagement() {
         columns={columns}
         pageSize={25}
         rowsPerPageOptions={[10, 25, 50]}
-        // hiện loading khi
         loading={
           loadingUpdateMovie ||
           loadingDeleteMovie ||
@@ -340,7 +332,6 @@ export default function MoviesManagement() {
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: GridToolbar,
         }}
-        // sort
         sortModel={[{ field: "tenPhim", sort: "asc" }]}
       />
       <Dialog open={openModal}>

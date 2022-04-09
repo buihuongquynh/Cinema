@@ -41,33 +41,6 @@ export const login = (user) => {
         },
       });
     }
-
-    // dispatch({
-    //   type: LOGIN_REQUEST,
-    // });
-    // usersApi
-    //   .postDangNhap(user)
-    //   .then((result) => {
-    //     // lưu thông tin user xuống local storeage
-    //     localStorage.setItem(
-    //       "user",
-    //       JSON.stringify({ ...result.data, avtIdUser: result.data.taiKhoan })
-    //     );
-    //     dispatch({
-    //       type: LOGIN_SUCCESS,
-    //       payload: {
-    //         data: result.data,
-    //       },
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     dispatch({
-    //       type: LOGIN_FAIL,
-    //       payload: {
-    //         error: error.response?.data ? error.response.data : error.message,
-    //       },
-    //     });
-    //   });
   };
 };
 

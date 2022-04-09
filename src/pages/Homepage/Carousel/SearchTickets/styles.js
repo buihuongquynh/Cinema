@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core"
 import { customScrollbar } from '../../../../styles/materialUi';
 const useStyle = makeStyles({
-  // search bar
   search: {
     display: props => props.down992px ? "none" : 'flex',
     maxWidth: "940px",
@@ -143,7 +142,6 @@ const useStyle = makeStyles({
       fontSize: 11,
       color: '#aaa',
     },
-    // màu nền và chữ khi hover
     '&:hover': {
       backgroundColor: "rgb(238, 130, 59)",
       color: "#fff",
@@ -160,7 +158,7 @@ const useStyle = makeStyles({
     }
   },
   // button
-  btn: { // css áp dụng khi disabled = false
+  btn: {
     backgroundColor: 'rgb(238, 130, 59)',
     margin: 'auto',
     '&:hover': {
@@ -169,12 +167,12 @@ const useStyle = makeStyles({
     '&:focus': {
       outline: "none",
     },
-    "&$btn": {// css áp dụng khi disabled button
+    "&$btn": {
       color: '#fff',
       padding: "8px 23px",
     }
   },
-  btnDisabled: {// css áp dụng khi disabled button
+  btnDisabled: {
     backgroundColor: "#4a4a4a",
     border: "none",
     textTransform: "uppercase",

@@ -11,7 +11,6 @@ import {
 } from "../../../reducers/constants/BookTicket";
 
 const makeObjError = (name, value, dataSubmit) => {
-  // kiểm tra và set lỗi rỗng
   let newErrors = {
     ...dataSubmit.errors,
     [name]:
@@ -19,11 +18,7 @@ const makeObjError = (name, value, dataSubmit) => {
         ? `${name.charAt(0).toUpperCase() + name.slice(1)} không được bỏ trống`
         : "",
   };
-
-  // kiểm tra và set lỗi sai định dạng
-  //eslint-disable-next-line
   const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  //eslint-disable-next-line
   const regexNumber =
     /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
   if (name === "email" && value) {
@@ -60,8 +55,8 @@ export default function PayMent() {
   } = useSelector((state) => state.BookTicketReducer);
   const dispatch = useDispatch();
   const emailRef = useRef();
-  const phoneRef = useRef(); // dùng useRef để dom tớ element
-  let variClear = useRef(""); // dùng useRef để lưu lại giá trị setTimeout
+  const phoneRef = useRef(); 
+  let variClear = useRef(""); 
   const [dataFocus, setDataFocus] = useState({ phone: false, email: false });
   const [dataSubmit, setdataSubmit] = useState({
     values: {
@@ -83,7 +78,6 @@ export default function PayMent() {
   });
 
   const onChange = (e) => {
-    // khi onchange update values và validation
     let { name, value } = e.target;
     let newValues = { ...dataSubmit.values, [name]: value };
     let newErrors = makeObjError(name, value, dataSubmit);
@@ -95,7 +89,6 @@ export default function PayMent() {
   };
 
   useEffect(() => {
-    // sau 0.5s mới đẩy data lên redux để tăng hiệu năng
     clearTimeout(variClear);
     variClear.current = setTimeout(() => {
       dispatch({
@@ -106,7 +99,6 @@ export default function PayMent() {
           paymentMethod: dataSubmit.values.paymentMethod,
         },
       });
-      // khi không có lỗi và đủ dữ liệu thì set data sẵn sàng đặt vé và ngược lại, set activeStep = 1 nếu đủ dữ liệu và chưa đặt vé
       if (
         !dataSubmit.errors.email &&
         !dataSubmit.errors.phone &&
@@ -130,7 +122,6 @@ export default function PayMent() {
   }, [dataSubmit, isSelectedSeat]);
 
   useEffect(() => {
-    // cập nhật lại data email, phone và validation khi reload
     let emailErrors = makeObjError(emailRef.current.name, email, dataSubmit);
     let phoneErrors = makeObjError(phoneRef.current.name, phone, dataSubmit);
     setdataSubmit((dataSubmit) => ({
@@ -142,10 +133,9 @@ export default function PayMent() {
       },
       errors: { email: emailErrors.email, phone: phoneErrors.phone },
     }));
-  }, [listSeat]); // khi reload listSeat sẽ được cập nhật kèm theo, email, phone mặc định của tài khoản
+  }, [listSeat]); 
 
   const handleBookTicket = () => {
-    // khi đủ dữ liệu và chưa có lần đặt vé nào trước đó thì mới cho đặt vé
     if (
       isReadyPayment &&
       !loadingBookTicketTicket &&
@@ -153,7 +143,6 @@ export default function PayMent() {
       !errorBookTicketMessage
     ) {
       dispatch(BookTicket({ maLichChieu, danhSachVe, taiKhoanNguoiDung }));
-      // dispatch(BookTicket({ maLichChieu: 40396, danhSachVe: [{ maGhe: 9122569, giaVe: 75000 }], taiKhoanNguoiDung }))
     }
   };
   const onFocus = (e) => {
@@ -166,12 +155,9 @@ export default function PayMent() {
   return (
     <aside className={classes.payMent}>
       <div>
-        {/* tổng tiền */}
         <p className={`${classes.amount} ${classes.payMentItem}`}>
           {`${amount.toLocaleString("vi-VI")} đ`}
         </p>
-
-        {/* thông tin phim và rạp */}
         <div className={classes.payMentItem}>
           <p className={classes.tenPhim}>{thongTinPhim?.tenPhim}</p>
           <p>{thongTinPhim?.tenCumRap}</p>
@@ -180,7 +166,6 @@ export default function PayMent() {
           } - ${thongTinPhim?.gioChieu} - ${thongTinPhim?.tenRap}`}</p>
         </div>
 
-        {/* ghế đã chọn */}
         <div className={`${classes.seatInfo} ${classes.payMentItem}`}>
           <span>{`Ghế ${listSeatSelected?.join(", ")}`}</span>
           <p className={classes.amountLittle}>

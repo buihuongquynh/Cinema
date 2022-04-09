@@ -173,7 +173,6 @@ export default function UsersManagement() {
   }, [successDelete, errorDelete]);
 
   useEffect(() => {
-    // update user xong thì thông báo
     if (userListmodified.cancel) {
       return;
     }
@@ -218,11 +217,9 @@ export default function UsersManagement() {
   }, [successAddUser, errorAddUser]);
 
   useEffect(() => {
-    // ý tưởng là tiến hành delete từng user trong danh sách mỗi khi hoàn thành call api cho đến khi hết user trong danh dách
     if (userListDelete.userListDelete.length) {
-      // nếu mảng còn phần tử
       let newUserListDelete = [...userListDelete.userListDelete]; // copy
-      const userDelete = newUserListDelete.shift(); // cắt ra, và xóa luôn phần tử đầu trong mảng
+      const userDelete = newUserListDelete.shift(); 
       setUserListDelete((data) => ({
         ...data,
         userListDelete: newUserListDelete,
@@ -232,7 +229,6 @@ export default function UsersManagement() {
       return;
     }
     if (userListDelete.userListDelete.length === 0) {
-      // nếu mảng hết phần tử
       setUserListDelete({
         triggerDelete: false,
         userListDelete: [],
@@ -241,7 +237,7 @@ export default function UsersManagement() {
       dispatch(resetUserList());
       setSelectionModel([]);
     }
-  }, [userListDelete.triggerDelete]); // chỉ khi được kích hoạt thì mới thực hiện xóa tiếp user, nếu dùng chung successDelete, errorDelete làm trigger có thể lỗi do kết quả của useEffect trên phụ thuộc vào successDelete, errorDelete
+  }, [userListDelete.triggerDelete]); 
 
   useEffect(() => {
     if (userListmodified.userListmodified.length) {
@@ -267,7 +263,7 @@ export default function UsersManagement() {
   const handleEditCellChange = useCallback(
     ({ id, field, props }) => {
       if (field === "email") {
-        const data = props; // Fix eslint value is missing in prop-types for JS files
+        const data = props; 
         const isValid = validateEmail(data.value);
         const newState = {};
         newState[id] = {
@@ -276,7 +272,6 @@ export default function UsersManagement() {
         };
         setEditRowsModel((state) => ({ ...state, ...newState }));
         if (!validateEmail(props.value)) {
-          // nếu email sai thì thoát không lưu
           return;
         }
       }
@@ -290,8 +285,6 @@ export default function UsersManagement() {
     [editRowsModel, addUser.toggle]
   );
 
-  // handleEditCellChangeCommitted thực thi mỗi khi cell change được commit(không lỗi validation)
-  // so sánh với giá trị trước khi chỉnh sửa, nếu khác biệt thì thêm user vào danh sách chuẩn bị update, nếu không khác biệt thì xóa khỏi danh sách hoặc không làm gì
   const handleEditCellChangeCommitted = useCallback(
     ({ id, field, props: { value } }) => {
       if (addUser.toggle) {
@@ -309,21 +302,20 @@ export default function UsersManagement() {
           addUser.data[0].email !== "" &&
           addUser.data[0].soDt !== "";
         setaddUser((data) => ({ ...data, readyAdd, isFilledIn }));
-        return; // không thực hiệc các việc bên dưới nếu đang ở màn hình addUser
+        return; 
       }
-      const userOriginal = usersList.find((user) => user.taiKhoan === id); // lấy ra phần tử chưa được chỉnh sửa
+      const userOriginal = usersList.find((user) => user.taiKhoan === id); 
       const valueDisplay = value;
       let valueModified = value;
       if (field === "maLoaiNguoiDung") {
         valueModified = value ? "QuanTri" : "KhachHang";
       }
-      const isChange = userOriginal[field] === valueModified ? false : true; // liệu có thay đổi
+      const isChange = userOriginal[field] === valueModified ? false : true; 
       const indexUserExist = userListmodified.userListmodified.findIndex(
         (user) => user.taiKhoan === id
-      ); // user vừa chỉnh có được lưu trước đó?
+      ); 
       if (isChange) {
-        // nếu có khác biệt
-        // xử lý hiển thị: set row đã modify, set lại value mới
+       
         const updatedUsersListDisplay = usersListDisplay.map((row) => {
           if (row.id === id) {
             return { ...row, ismodify: true, [field]: valueDisplay };
@@ -331,12 +323,9 @@ export default function UsersManagement() {
           return row;
         });
         setUsersListDisplay(updatedUsersListDisplay);
-        // xử lý userListmodified
         if (indexUserExist !== -1) {
-          // nếu đã tồn tại user modify
           const newUserListmodified = userListmodified.userListmodified.map(
             (user) => {
-              // sửa lại phần khác biệt
               if (user.taiKhoan === id) {
                 return { ...user, [field]: valueModified };
               }
@@ -355,11 +344,10 @@ export default function UsersManagement() {
             ...userListmodified.userListmodified,
             { ...userOriginal, [field]: valueModified, maNhom: "GP09" },
           ],
-        })); // nếu chưa tồn tại thì push vào
+        })); 
         return;
       }
       if (indexUserExist !== -1) {
-        // nếu không khác biệt và có trong danh sách modify
         let userModified = userListmodified.userListmodified[indexUserExist];
         userModified = { ...userModified, [field]: valueModified };
         const isMatKhauChange = userModified.matKhau !== userOriginal.matKhau;
@@ -374,7 +362,6 @@ export default function UsersManagement() {
           isSoDtChange ||
           isMaLoaiNguoiDungChange ||
           isHoTenChange;
-        // xử lý display
         const updatedUsersListDisplay = usersListDisplay.map((row) => {
           if (row.id === id) {
             return { ...row, ismodify, [field]: valueDisplay };
@@ -382,8 +369,6 @@ export default function UsersManagement() {
           return row;
         });
         setUsersListDisplay(updatedUsersListDisplay);
-
-        // nếu ismodify = true thì cập nhật userListmodified
         if (ismodify) {
           const newUserListmodified = userListmodified.userListmodified.map(
             (user) => {
@@ -399,10 +384,9 @@ export default function UsersManagement() {
           }));
           return;
         }
-        // nếu ismodify = false thì xóa user khỏi userListmodified
         const newUserListmodified = userListmodified.userListmodified.filter(
           (user) => user.taiKhoan !== id
-        ); // xóa ra khỏi mảng
+        );
         setUserListmodified((data) => ({
           ...data,
           userListmodified: newUserListmodified,
@@ -421,10 +405,8 @@ export default function UsersManagement() {
     setBtnReFresh(nanoid(6));
   };
 
-  // xóa một user
   const handleDeleteOne = (taiKhoan) => {
     if (loadingDelete) {
-      // nếu click xóa liên tục một user
       return;
     }
     dispatch(deleteUser(taiKhoan));
@@ -529,7 +511,6 @@ export default function UsersManagement() {
 
   const columns = useMemo(
     () =>
-      // cột tài khoản không được chỉnh sửa, backend dùng "taiKhoan" để định danh user
       [
         {
           field: "xoa",
@@ -706,7 +687,6 @@ export default function UsersManagement() {
         editRowsModel={editRowsModel}
         onEditCellChange={handleEditCellChange}
         onEditCellChangeCommitted={handleEditCellChangeCommitted}
-        // hiện loading khi đang call api lấy userList
         loading={loadingUsersList}
         components={{ LoadingOverlay: CustomLoadingOverlay }}
         // sort
