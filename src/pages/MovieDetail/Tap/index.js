@@ -115,7 +115,7 @@ export default function CenteredTabs({
         cancelButtonText: "Không",
       }).then((result) => {
         if (result.isConfirmed) {
-          history.push("/dangnhap", location.pathname);
+          history.push("/login", location.pathname);
         }
       });
     }

@@ -13,7 +13,7 @@ function CheckoutRoute(props) {
       return (
         <Redirect
           to={{
-            pathname: "/dangnhap",
+            pathname: "/login",
             state: propsInRoute.location.state
           }}
         />
