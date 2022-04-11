@@ -70,7 +70,7 @@ export default function CustomPopper(props) {
               </div>
               <button
                 className=""
-                onClick={() => history.push(`/phim/${phim.maPhim}`)}
+                onClick={() => history.push(`/datve/${phim.maPhim}`)}
               >
                 Chi tiêt phim
               </button>
